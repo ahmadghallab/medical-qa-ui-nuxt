@@ -1,0 +1,1 @@
+export type RequestMethods = "put" | "post" | "patch" | "delete" | "get";
