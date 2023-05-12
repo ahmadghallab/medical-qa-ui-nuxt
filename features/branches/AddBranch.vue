@@ -3,7 +3,7 @@ import useVuelidate from '@vuelidate/core';
 import { helpers, required } from '@vuelidate/validators';
 import { useMutation } from '~/composables/useMutation';
 
-const { handleAddBranchModal } = useBranches();
+const { handleAddBranchModal, branchesList, handleUpdateBranchesList } = useBranches();
 
 const formData = reactive({
   name: ''
@@ -19,14 +19,21 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, formData)
 
-const handleOnComplete = () => {
-  refreshNuxtData('branches')
+const handleOnComplete = (data) => {
+
+  const newData = {
+    count: branchesList.value.count + 1,
+    raw: [data.data, ...branchesList.value.raw]
+  }
+
+  handleUpdateBranchesList(newData)
+
   handleAddBranchModal();
 }
 
 const { loading, error, mutate } = useMutation({
-  onCompleted: () => {
-    handleOnComplete()
+  onCompleted: (data) => {
+    handleOnComplete(data)
   }
 });
 
