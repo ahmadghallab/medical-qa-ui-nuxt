@@ -8,16 +8,40 @@ export default function useBranches() {
   }
 
   // Add branch
-  const useAddBranchModal = () => useState('addBranchModal', () => false)
-  const addBranchModal = useAddBranchModal();
+  const useAddBranch = () => useState('addBranch', () => ({ modalOpen: false }))
+  const addBranch = useAddBranch();
   const handleAddBranchModal = () => {
-    addBranchModal.value = !addBranchModal.value
+    addBranch.value.modalOpen = !addBranch.value.modalOpen
+  }
+
+  // Edit branch
+  const useEditBranch = () => useState('editBranch', () => ({ modalOpen: false, data: null }))
+  const editBranch = useEditBranch();
+  const handleEditBranchModal = (data?: any) => {    
+    editBranch.value.modalOpen = !editBranch.value.modalOpen
+    editBranch.value.data = data
+  }
+
+  // Delete branch
+  const useDeleteBranch = () => useState('deleteBranch', () => ({ modalOpen: false, data: null }))
+  const deleteBranch = useDeleteBranch();
+  const handleDeleteBranchModal = (data?: any) => {
+    deleteBranch.value.modalOpen = !deleteBranch.value.modalOpen
+    deleteBranch.value.data = data
   }
 
   return {
     branchesList,
     handleUpdateBranchesList,
-    addBranchModal,
+
+    addBranch,
     handleAddBranchModal,
+
+    editBranch,
+    handleEditBranchModal,
+
+    deleteBranch,
+    handleDeleteBranchModal
   }
+
 }

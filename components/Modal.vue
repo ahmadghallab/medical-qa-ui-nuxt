@@ -1,5 +1,5 @@
 <template>
-  <TransitionRoot appear :show="isOpen" as="template">
+  <TransitionRoot appear :show="isOpen" v-if="isOpen" as="template">
     <Dialog as="div" @close="closeModal" class="relative z-40">
       <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
         leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
@@ -16,7 +16,7 @@
               <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                 {{ title }}
               </DialogTitle>
-              <div class="mt-2">
+              <div class="mt-5">
                 <slot />
               </div>
             </DialogPanel>

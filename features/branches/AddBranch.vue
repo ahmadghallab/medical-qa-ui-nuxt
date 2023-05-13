@@ -1,23 +1,12 @@
 <script setup>
-import useVuelidate from '@vuelidate/core';
-import { helpers, required } from '@vuelidate/validators';
 import { useMutation } from '~/composables/useMutation';
+import BranchForm from './BranchForm.vue';
 
 const { handleAddBranchModal, branchesList, handleUpdateBranchesList } = useBranches();
 
-const formData = reactive({
+const defaultValues = {
   name: ''
-})
-
-const rules = computed(() => {
-  return {
-    name: {
-      required: helpers.withMessage('Name is required', required)
-    }
-  }
-});
-
-const v$ = useVuelidate(rules, formData)
+}
 
 const handleOnComplete = (data) => {
 
@@ -37,26 +26,14 @@ const { loading, error, mutate } = useMutation({
   }
 });
 
-const submitForm = () => {
-  v$.value.$validate();
-  if (!v$.value.$error) {
-    mutate('/branches', { method: 'post', body: formData })
-  }
+const handleSubmit = (formData) => {
+  mutate('/branches', { method: 'post', body: formData })
 }
 
 </script>
 
 <template>
-  <form @submit.prevent="submitForm">
+  <Error v-if="error" :error="error" />
 
-    <div class="p-5 rounded-md bg-red-100 text-red-800" v-if="error">
-      {{ error }}
-    </div>
-
-    <Input v-model="formData.name" label="Name" placeholder="Input name" :validator="v$.name" />
-
-    <div class="flex justify-end mt-7">
-      <Button type="submit" :loading="loading">Add branch</Button>
-    </div>
-  </form>
+  <BranchForm :defaultValues="defaultValues" :loading="loading" @handleSubmit="handleSubmit" />
 </template>

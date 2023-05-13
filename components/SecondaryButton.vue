@@ -1,5 +1,12 @@
 <script setup>
 
+const { variant } = defineProps({
+  variant: {
+    type: String,
+    default: 'default'
+  }
+})
+
 const emits = defineEmits(['onClick'])
 
 const handleClick = () => {
@@ -10,8 +17,11 @@ const handleClick = () => {
 
 <template>
   <button type="button"
-    class="inline-flex justify-center border border-transparent bg-violet-100 px-4 py-2 rounded-md text-sm font-medium text-violet-700 hover:bg-violet-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
-    @click="handleClick">
+    class="inline-flex justify-center border border-transparent  px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+    :class="{
+      'bg-violet-100 text-violet-700 hover:bg-violet-200 focus-visible:ring-violet-500': variant === 'default',
+      'bg-rose-100 text-rose-700 hover:bg-rose-200 focus-visible:ring-rose-500': variant === 'danger'
+    }" @click="handleClick">
     <slot />
   </button>
 </template>

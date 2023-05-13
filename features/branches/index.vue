@@ -4,8 +4,19 @@ const router = useRouter();
 
 import AddBranch from './AddBranch.vue';
 import BranchesListBody from './BranchesListBody.vue';
+import DeleteBranch from './DeleteBranch.vue';
+import EditBranch from './EditBranch.vue';
 
-const { addBranchModal, handleAddBranchModal, branchesList, handleUpdateBranchesList } = useBranches();
+const {
+  addBranch,
+  handleAddBranchModal,
+  branchesList,
+  handleUpdateBranchesList,
+  editBranch,
+  handleEditBranchModal,
+  deleteBranch,
+  handleDeleteBranchModal
+} = useBranches();
 
 let page = ref(router.query?.page ? Number(router.query.page) : 1);
 
@@ -30,12 +41,20 @@ watch(page, (newPage) => {
 
 <template>
   <Loading v-if="pending" />
-  <Error v-else-if="error" />
+  <Error v-else-if="error" :error="error" />
   <BranchesListBody v-else :branches="branchesList" />
 
   <Pagination v-model="page" :count="branchesList?.count" />
 
-  <Modal title="Add Branch" :isOpen="addBranchModal" @onClose="handleAddBranchModal">
+  <Modal title="Add Branch" :isOpen="addBranch.modalOpen" @onClose="handleAddBranchModal">
     <AddBranch />
+  </Modal>
+
+  <Modal title="Edit branch" :isOpen="editBranch.modalOpen" @onClose="handleEditBranchModal">
+    <EditBranch />
+  </Modal>
+
+  <Modal title="Delete branch" :isOpen="deleteBranch.modalOpen" @onClose="handleDeleteBranchModal">
+    <DeleteBranch />
   </Modal>
 </template>

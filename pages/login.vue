@@ -31,7 +31,7 @@ const rules = computed(() => {
   };
 });
 
-const v$ = useVuelidate(rules, formData);
+const validator = useVuelidate(rules, formData);
 
 const login = (email) => {
   auth.authenticate(email)
@@ -39,8 +39,8 @@ const login = (email) => {
 }
 
 const submitForm = () => {
-  v$.value.$validate();
-  if (!v$.value.$error) {
+  validator.value.$validate();
+  if (!validator.value.$error) {
     login(formData.email);
   }
 };
@@ -52,11 +52,12 @@ const submitForm = () => {
     <h1 class="text-lg font-semibold text-slate-900">Login</h1>
     <p class="text-slate-500">Enter you credentials</p>
     <form @submit.prevent="submitForm">
-      <Input v-model="formData.email" label="Email" type="email" placeholder="Input your email" :validator="v$.email" />
+      <Input v-model="formData.email" label="Email" type="email" placeholder="Input your email"
+        :validator="validator.email" />
       <Input v-model="formData.password" label="Password" type="password" placeholder="Input your password"
-        :validator="v$.password" />
+        :validator="validator.password" />
       <div class="flex justify-end mt-7">
-        <button class="btn-primary disabled:bg-slate-100 disabled:text-slate-300">Login</button>
+        <Button type="submit">Login</button>
       </div>
     </form>
   </div>

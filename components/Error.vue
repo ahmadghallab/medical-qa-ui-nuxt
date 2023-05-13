@@ -1,3 +1,12 @@
+<script setup>
+const { error } = defineProps({
+  error: {
+    type: String,
+    default: 'Something went wrong'
+  }
+})
+</script>
+
 <template>
-  <p class="text-slate-700 dark:text-slate-400">Error while fetching drugs</p>
+  <p class="p-3 rounded-md bg-rose-200 text-rose-900 mb-3">{{ error }}</p>
 </template>
