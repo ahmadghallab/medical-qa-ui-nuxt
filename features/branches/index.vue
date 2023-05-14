@@ -4,6 +4,7 @@ const router = useRouter();
 
 import AddBranch from './AddBranch.vue';
 import BranchesListBody from './BranchesListBody.vue';
+import BranchesListHeader from './BranchesListHeader.vue';
 import DeleteBranch from './DeleteBranch.vue';
 import EditBranch from './EditBranch.vue';
 
@@ -40,7 +41,9 @@ watch(page, (newPage) => {
 </script>
 
 <template>
-  <Loading v-if="pending" />
+  <BranchesListHeader :count="branchesList?.count" />
+
+  <Dots v-if="pending" />
   <Error v-else-if="error" :error="error" />
   <BranchesListBody v-else :branches="branchesList" />
 
