@@ -1,6 +1,6 @@
 <script setup>
 const config = useRuntimeConfig();
-const router = useRouter();
+const route = useRouter();
 
 import AddBranch from './AddBranch.vue';
 import BranchesListBody from './BranchesListBody.vue';
@@ -19,7 +19,7 @@ const {
   handleDeleteBranchModal
 } = useBranches();
 
-let page = ref(router.query?.page ? Number(router.query.page) : 1);
+let page = ref(route.query?.page ? Number(route.query.page) : 1);
 
 const { data, pending, error } = await useLazyFetch('/branches', {
   baseURL: config.public.apiBase,
@@ -31,7 +31,7 @@ watch(data, (newData) => {
 })
 
 watch(page, (newPage) => {
-  router.push({
+  route.push({
     path: '/',
     query: { page: newPage },
   })
