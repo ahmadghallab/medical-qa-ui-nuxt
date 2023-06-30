@@ -26,7 +26,7 @@ const auth = useAuthStore();
           </template>
           <template v-else>
             <li>
-              <NuxtLink to="/"
+              <NuxtLink to="/register"
                 class="text-sm lg:text-base focus-visible:ring hover:bg-slate-100 rounded-md p-3 transition text-slate-900">
                 Create account
               </NuxtLink>
